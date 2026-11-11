@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "oggm-adapbs"
+dynamic = ["version"]
+description = "Bayesian calibration of OGGM with the adaptive particle batch smoother (AdaPBS)"
+readme = "README.md"
+license = "GPL-3.0-only"
+license-files = ["LICENSE"]
+authors = [{ name = "OGGM e.V. and OGGM Contributors" }]
+requires-python = ">=3.11"
+dependencies = [
+    "numpy",
+    "scipy",
+    "pandas",
+    "xarray",
+    # Needs the OGGM development version for now (not on PyPI yet)
+    "oggm",
+]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[project.urls]
+Homepage = "https://github.com/OGGM/oggm-adapbs"
+
+[tool.hatch.version]
+path = "oggm_adapbs/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["oggm_adapbs"]
+
+[tool.hatch.build.targets.sdist]
+include = ["oggm_adapbs", "README.md", "LICENSE", "pytest.ini"]

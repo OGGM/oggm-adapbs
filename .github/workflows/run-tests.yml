@@ -1,0 +1,52 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Tests on ${{ matrix.container }}
+    strategy:
+      fail-fast: false
+      matrix:
+        container:
+          # One of the images used in OGGM's own CI
+          - ghcr.io/oggm/untested_base:20260223
+    runs-on: ubuntu-latest
+    container: ${{ matrix.container }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Fix Git-Permissions
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - name: Test
+        timeout-minutes: 60
+        run: ./ci/run_tests.sh
+
+  musa-master:
+    # Our AMIS against the current MuSA: tells us when MuSA changes.
+    # Allowed to fail: the pinned comparison in the job above is the real test.
+    name: AMIS vs MuSA master (allowed to fail)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Install
+        # The algorithm has no OGGM dependency: no need for OGGM here
+        run: pip install numpy scipy pandas pytest && pip install --no-deps -e .
+      - name: Test
+        run: |
+          ./ci/get_musa.sh "$RUNNER_TEMP/MuSA" master
+          MUSA_DIR="$RUNNER_TEMP/MuSA" pytest --noconftest --verbose \
+              oggm_adapbs/tests/test_adapbs.py -k musa

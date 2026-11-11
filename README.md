@@ -5,13 +5,13 @@ with the adaptive particle batch smoother (AdaPBS).
 
 Instead of one "best" parameter set, the calibration returns weighted parameter
 samples of the posterior distribution, given a prior and observations with
-errors. The AdaPBS is adaptive multiple importance sampling: it runs the model on
+errors. AdaPBS is adaptive multiple importance sampling: it runs the model on
 batches of parameter samples ("particles") and moves the proposal distribution
 towards the posterior until the weights are no longer degenerate.
 
 **Status: experimental and temporary.** The AdaPBS code is adapted from
 [MuSA](https://github.com/ealonsogzl/MuSA), which is licensed under the GPL-3.0.
-OGGM is BSD-3-Clause, so the AdaPBS lives in this separate GPL package for now.
+OGGM is BSD-3-Clause, so AdaPBS lives in this separate GPL package for now.
 We expect to replace it with a lightweight, permissively licensed package by the
 MuSA authors when it becomes available.
 
@@ -57,7 +57,7 @@ or, for development, clone this repository and run `pip install -e .`
   (`mb_calibration_from_geodetic_mb_adapbs`).
 - `example_workflows/`: notebooks.
   - `wgms_static_calibration.ipynb`: the AdaPBS version of OGGM's
-    `mb_calibration_to_rmsd`, against WGMS mean, annual, winter and summer MB.
+    `mb_calibration_to_rmsd` (annual MB), then with the winter and summer MB.
 
 Example:
 

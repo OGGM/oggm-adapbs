@@ -1,7 +1,7 @@
 #!/bin/bash
 # Download MuSA's modules/filters.py (for the AMIS comparison test) into <dir>.
 # Usage: ci/get_musa.sh <dir> [<ref>]
-# The default ref is the MuSA commit the AdaPBS was ported from.
+# The default ref is the MuSA commit AdaPBS was ported from.
 set -e
 MUSA_REF=${2:-eb56ca77044a1d022f4f21659a39ec2c70f63ee8}
 mkdir -p "$1/modules"

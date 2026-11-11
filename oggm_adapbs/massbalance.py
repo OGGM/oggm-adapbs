@@ -1,4 +1,4 @@
-"""OGGM mass balance calibration with the AdaPBS, static geometry.
+"""OGGM mass balance calibration with AdaPBS, static geometry.
 
 Tools to build the prior and the forward model of the mass balance
 parameters (melt_f, prcp_fac, temp_bias) of OGGM's ``MonthlyTIModel`` on
@@ -291,7 +291,7 @@ def mb_calibration_from_geodetic_mb_adapbs(gdir, *,
                                            mb_model_class=MonthlyTIModel,
                                            **kwargs: dict,
                                            ):
-    """Bayesian calibration to geodetic MB data with the AdaPBS.
+    """Bayesian calibration to geodetic MB data with AdaPBS.
 
     Experimental. Instead of one parameter set like OGGM's
     ``mb_calibration_from_geodetic_mb``, this returns weighted parameter

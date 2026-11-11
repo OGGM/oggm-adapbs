@@ -198,7 +198,7 @@ def weighted_quantile(x, weights, q):
 def run_adapbs(forward, obs, obs_err, x_min, x_max, *,
                prior_mean=None, prior_sd=1., n_particles=100,
                max_iterations=4, neff_threshold=0.3, rng=None):
-    """Run the AdaPBS (MuSA's AdaPBS branch of ``implement_assimilation``).
+    """Run AdaPBS (MuSA's AdaPBS branch of ``implement_assimilation``).
 
     Each iteration draws ``n_particles`` parameter sets from a Gaussian
     proposal in normal space (the prior at the first iteration), runs

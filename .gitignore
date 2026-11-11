@@ -1,0 +1,25 @@
+# Python
+*.py[cod]
+__pycache__
+*.egg-info
+*.egg
+build/
+dist/
+.env
+
+# Tests
+.pytest_cache
+.coverage
+.coverage.*
+coverage.xml
+result_images
+
+# Notebooks
+.ipynb_checkpoints
+example_workflows/**/wd/
+example_workflows/**/out/
+
+# IDE and OS
+.idea/
+.vscode/
+.DS_Store

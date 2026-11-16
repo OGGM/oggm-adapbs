@@ -55,9 +55,24 @@ or, for development, clone this repository and run `pip install -e .`
   winter, summer and annual MB of hydrological years (`seasonal_specific_mb`),
   and an entity task calibrating against geodetic MB
   (`mb_calibration_from_geodetic_mb_adapbs`).
+- `oggm_adapbs.dynamic` (experimental): one AdaPBS calibration of a glacier
+  replaces OGGM's static MB calibration, regional inversion and dynamic spinup.
+  Each particle inverts the ice thickness with its own MB parameters and Glen A,
+  grows the glacier in a constant climate with a temperature offset, then runs
+  with the historical climate. Targets: geodetic MB, RGI area and IceBoost
+  mean thickness or volume (`dynamic_calibration_adapbs`, with a pool of
+  processes).
 - `example_workflows/`: notebooks.
   - `wgms_static_calibration.ipynb`: the AdaPBS version of OGGM's
     `mb_calibration_to_rmsd` (annual MB), then with the winter and summer MB.
+  - `geodetic_equifinality.ipynb`: calibration of three parameters against
+    one geodetic MB value, with a flat prior: equifinality, information gain,
+    and the role of the prior.
+  - `dynamic_calibration.ipynb` (experimental): a sensitivity experiment with
+    wide priors. MB parameters, Glen A and the growth period of the spinup
+    calibrated together against the geodetic MB, the RGI area and the IceBoost
+    mean thickness, with dynamical runs in parallel; with and without the
+    growth period, and against OGGM's dynamic calibration.
 
 Example:
 

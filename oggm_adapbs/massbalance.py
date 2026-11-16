@@ -329,8 +329,9 @@ def mb_calibration_from_geodetic_mb_adapbs(gdir, *,
     prior_bounds : dict, optional
         override the bounds of some parameters, e.g. {'temp_bias': (-2, 2)}
     prior_sd : float or dict
-        prior standard deviation in normal space (default: 1). Above ~1.8 the
-        logit-normal puts most of its mass near the bounds.
+        prior standard deviation in normal space (default: 1). Centred in
+        the middle of the bounds, the logit-normal is close to uniform at ~1.4
+        and becomes bimodal (mass at the bounds) above sqrt(2).
     centre_prior : bool
         if False, the prior is centred in the middle of the bounds (in normal
         space, as in MuSA) instead of on the prior centre

@@ -92,6 +92,13 @@ def test_run_adapbs_linear_gaussian():
     assert res['posterior_theta'].shape == (500, 2)
     assert_allclose(np.sum(w), 1)
 
+    # The evidence is known too: y ~ N(A m0, A C0 A^T + R)
+    s = A @ A.T * sd0 ** 2 + np.diag(r)
+    d = y - A @ m0
+    log_z = -0.5 * (np.linalg.slogdet(2 * np.pi * s)[1] +
+                    d @ np.linalg.solve(s, d))
+    assert_allclose(res['log_evidence'], log_z, atol=0.05)
+
 
 def test_run_adapbs_failed_runs():
     x_min, x_max = np.array([0.]), np.array([10.])

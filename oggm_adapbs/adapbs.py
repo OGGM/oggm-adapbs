@@ -140,7 +140,10 @@ def amis_weights(obs, pred, obs_var, prior_mean, prior_cov,
     logwt = (log_b - phi - lse_psi).flatten('F')  # iteration by iteration
     lwt_max = np.max(logwt)
     lse_lwt = lwt_max + np.log(np.sum(np.exp(logwt - lwt_max)))
-    log_z = lse_lwt - np.log(Nl * Ne)
+    # Evidence: mean over the Nl * Ne particles of target / mixture, with
+    # the mixture density the mean of the Nl proposals. lse_psi is the log
+    # of their sum, hence Ne and not Nl * Ne.
+    log_z = lse_lwt - np.log(Ne)
     w = np.exp(logwt - lse_lwt)
     neff = 1 / np.sum(w ** 2)
     return w, neff, log_z
@@ -226,8 +229,9 @@ def run_adapbs(forward, obs, obs_err, x_min, x_max, *,
         prior mean in normal space (default: 0, the middle of the bounds).
         Use ``glogit(centre, x_min, x_max)`` to centre the prior on a value.
     prior_sd : scalar or (Np,) array
-        prior standard deviation in normal space (default: 1). Above ~1.8
-        the logit-normal becomes bimodal (mass at the bounds).
+        prior standard deviation in normal space (default: 1). Centred in
+        the middle of the bounds, the logit-normal is close to uniform at
+        ~1.4 and becomes bimodal (mass at the bounds) above sqrt(2).
     n_particles : int
         particles per iteration (Ne)
     max_iterations : int

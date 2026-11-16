@@ -23,3 +23,7 @@ example_workflows/**/out/
 .idea/
 .vscode/
 .DS_Store
+
+# AI
+CLAUDE.md
+.claude

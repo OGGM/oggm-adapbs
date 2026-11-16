@@ -1,0 +1,32 @@
+# Settings of the slurm runs. Copy this file to config.sh (not tracked by git)
+# and adapt it to your cluster. submit.sh freezes a copy of it with the code.
+
+# --- Experiment
+# A name for this experiment: the outputs go to $OUTPUT_ROOT/$EXP_NAME
+EXP_NAME=wide_priors
+# Arguments of run_glacier.py (see: python scripts/run_glacier.py --help)
+RUN_ARGS="--n-particles 500 --max-iterations 20 --seed 0"
+
+# --- Slurm (one array task per glacier)
+SLURM_PARTITION=main
+SLURM_ACCOUNT=           # optional
+SLURM_CPUS=16            # processes per glacier (--n-workers)
+SLURM_TIME=04:00:00
+SLURM_MEM_PER_CPU=2G
+SLURM_MAIL=              # optional: e-mail for failed jobs
+
+# --- Paths
+# Final place of the outputs (copied there after each job)
+OUTPUT_ROOT=/path/to/results
+# Job scratch, on a local or fast disk: $SCRATCH_ROOT/<job id> (deleted at the end)
+SCRATCH_ROOT=/work/$USER
+# Optional: an OGGM download cache to read from (mounted read-only). Without
+# it, each job downloads the data it needs into its scratch.
+DOWNLOAD_CACHE=
+
+# --- Software
+# An apptainer image with OGGM's dependencies, e.g. one of OGGM's docker
+# images: apptainer pull oggm.sif docker://ghcr.io/oggm/oggm:<tag>
+CONTAINER=/path/to/oggm.sif
+# OGGM version installed in each job (a full commit hash of OGGM's master)
+OGGM_COMMIT=3e63e978ab1c54aa6b0600ed77cd22c01cb0e9b7

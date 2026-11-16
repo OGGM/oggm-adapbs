@@ -55,24 +55,37 @@ or, for development, clone this repository and run `pip install -e .`
   winter, summer and annual MB of hydrological years (`seasonal_specific_mb`),
   and an entity task calibrating against geodetic MB
   (`mb_calibration_from_geodetic_mb_adapbs`).
-- `oggm_adapbs.dynamic` (experimental): one AdaPBS calibration of a glacier
-  replaces OGGM's static MB calibration, regional inversion and dynamic spinup.
-  Each particle inverts the ice thickness with its own MB parameters and Glen A,
-  grows the glacier in a constant climate with a temperature offset, then runs
-  with the historical climate. Targets: geodetic MB, RGI area and IceBoost
-  mean thickness or volume (`dynamic_calibration_adapbs`, with a pool of
-  processes).
+- `oggm_adapbs.dynamic` (experimental): how many parameter sets of OGGM's
+  usual workflow (MB calibration, ice thickness inversion, dynamic spinup) are
+  consistent with the observations, and how different are their glaciers?
+  The MB parameters, Glen A and the initial state of the spinup vary
+  together; AdaPBS keeps the plausible parameter sets (as GLUE would, but
+  more efficiently). Each particle inverts the ice thickness with its own MB
+  parameters and Glen A, makes a starting glacier in a constant climate with a
+  temperature offset (the "initial state period"), then runs with the
+  historical climate. Observations: geodetic MB, RGI area and IceBoost mean
+  thickness or volume (`dynamic_equifinality_adapbs`, with a pool of
+  processes). The plausible runs can be rerun with OGGM's hydrological output
+  (`select_particles`, `dynamic_hydro_rerun`) for runoff metrics
+  (`runoff_metrics`).
 - `example_workflows/`: notebooks.
   - `wgms_static_calibration.ipynb`: the AdaPBS version of OGGM's
     `mb_calibration_to_rmsd` (annual MB), then with the winter and summer MB.
   - `geodetic_equifinality.ipynb`: calibration of three parameters against
     one geodetic MB value, with a flat prior: equifinality, information gain,
     and the role of the prior.
-  - `dynamic_calibration.ipynb` (experimental): a sensitivity experiment with
-    wide priors. MB parameters, Glen A and the growth period of the spinup
-    calibrated together against the geodetic MB, the RGI area and the IceBoost
-    mean thickness, with dynamical runs in parallel; with and without the
-    growth period, and against OGGM's dynamic calibration.
+  - `dynamic_equifinality.ipynb` (experimental): the plausible parameter sets
+    of a glacier (MB parameters, Glen A, initial state of the spinup) given
+    the geodetic MB, the RGI area and the IceBoost mean thickness, with wide
+    priors and dynamical runs in parallel; compared with OGGM's dynamic
+    calibration.
+  - `dynamic_runoff_sensitivity.ipynb` (experimental): the plausible runs
+    of the previous notebook rerun with OGGM's hydrological output; runoff
+    metrics (mean runoff, seasonality, share of glacier melt) and a simple
+    analysis of which parameters drive their spread.
+- `scripts/`: the same workflow for one glacier from the command line
+  (`run_glacier.py`), and slurm scripts to run many glaciers on a cluster
+  (see `scripts/README.md`).
 
 Example:
 

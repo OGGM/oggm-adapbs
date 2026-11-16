@@ -27,3 +27,6 @@ example_workflows/**/out/
 # AI
 CLAUDE.md
 .claude
+
+# Local slurm settings (scripts/config.sh.example is the template)
+scripts/config.sh
